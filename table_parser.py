@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup, Tag, NavigableString
 import requests
 import json
-import logging
 
 
 class Table:
@@ -63,11 +62,8 @@ class Parser:
 class Fetcher:
     @staticmethod
     def fetch(url: str):
-        try:
-            response = requests.get(url)
-            return response.text
-        except:
-            pass
+        response = requests.get(url)
+        return response.text
 
 
 class Record:
