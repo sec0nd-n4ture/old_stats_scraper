@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup, Tag, NavigableString
 import requests
 import json
+import logging
 
 
 class Table:
@@ -44,6 +45,7 @@ class RecordTable(Table):
     def get_table_name(table_head: Tag | NavigableString):
         return table_head.find("h1").contents[0].split("'")[0]
 
+
 class Parser:
     def __init__(self, page: str) -> None:
         self.page = page
@@ -57,14 +59,15 @@ class Parser:
         table_heads_navstr = self.soup.find_all("div", class_="tableHead")
         return table_heads_navstr
 
+
 class Fetcher:
     @staticmethod
     def fetch(url: str):
         try:
             response = requests.get(url)
             return response.text
-        except requests.exceptions.RequestException as e:
-            print(repr(e))
+        except:
+            pass
 
 
 class Record:
