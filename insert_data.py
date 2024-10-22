@@ -3,6 +3,14 @@ import sqlite3
 import json
 
 
+class TimeConverter:
+    @staticmethod
+    def convert_time_to_tdatetime(time_str):
+        minutes, seconds = map(int, time_str.split(":"))
+        tdatetime_fraction = (minutes * 60 + seconds) / 86400
+        return tdatetime_fraction
+
+
 class DatabaseManager:
     def __init__(self, db_file):
         self.conn = sqlite3.connect(db_file)
@@ -66,7 +74,7 @@ class RecordInserter:
                 for entry in data:
                     for value in entry.values():
                         name = value['name']
-                        time = value['time']
+                        time = TimeConverter.convert_time_to_tdatetime(value['time'])
                         date = value['date']
                         
                         self.db_manager.cursor.execute('''
